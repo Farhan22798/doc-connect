@@ -22,7 +22,8 @@ exports.getDocDetails = async (req, res) => {
 
 
 exports.bookAppointment = asyncHandler(async (req, res) => {
-    const { doctor } = req.body
-        await Appointments.create({ doctor, patient: req.user })
+    const { doctor, customerdetsreseaons } = req.body
+        await Appointments.create({ doctor,customerdetsreseaons, patient: req.user })
     res.json({ message: "appointment placed" })
 })
+  
