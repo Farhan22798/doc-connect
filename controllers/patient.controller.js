@@ -26,4 +26,22 @@ exports.bookAppointment = asyncHandler(async (req, res) => {
         await Appointments.create({ doctor,customerdetsreseaons, patient: req.user })
     res.json({ message: "appointment placed" })
 })
+
+exports.getMyAppointments = asyncHandler(async (req, res) => {
+
+    const result = await Appointments
+        .find({ patient: req.user, status: { $ne: "Old" } }).select("-patient -createdAt -updatedAt -__v")
+        .populate("doctor", "doctorName hero")
+        .sort({ createdAt: -1 })
+        res.json({ message: "appointment fetch success", result })
+    })
+    
+    exports.getAppointmentHistory = asyncHandler(async (req, res) => {
+        
+        const result = await Appointments
+        .find({ patient: req.user, status: {$nin: ["Pending","Confirmed"] } }).select(" -createdAt -updatedAt -__v")
+        .populate("doctor", "doctorName hero")
+        .sort({ createdAt: -1 })
+    res.json({ message: "appointment history fetch success", result })
+})
   
