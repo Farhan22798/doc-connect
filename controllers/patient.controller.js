@@ -13,11 +13,11 @@ exports.getDoctorsForPatients = asyncHandler(async (req, res) => {
     res.json({ message: "doctor fetch success", result })
 })
 
-exports.getDocDetails = async (req, res) => {
-    const { did } = req.params
-    const result = await Doctor.findById(did)
-    res.json({ message: "details fetch success", result })
-}
+
+exports.getDocDetails = asyncHandler(async (req, res) => {
+    const result = await Doctor.find({ doctor: req.params.did }).select((" -createdAt -updatedAt -__v"))
+    res.json({ message: "doctors details fetch success", result })
+})
 
 exports.bookAppointment = asyncHandler(async (req, res) => {
     const { doctor } = req.body

@@ -185,7 +185,7 @@ exports.loginPatient = asyncHandler(async (req, res) => {
     const token = jwt.sign({ _id: result._id }, process.env.JWT_KEY, { expiresIn: "1d" })
 
     res.cookie("patient", token, {
-        maxAge: 1000 * 60 * 60 * 24,
+        maxAge: 1000 * 60 * 60 * 24*365,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production"
 
