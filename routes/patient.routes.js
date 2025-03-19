@@ -1,4 +1,4 @@
-const {  getDoctorsForPatients, getDocDetails, bookAppointment, getMyAppointments, getAppointmentHistory } = require("../controllers/patient.controller")
+const {  getDoctorsForPatients, getDocDetails, bookAppointment, getMyAppointments, getAppointmentHistory, getSearchedDoctors } = require("../controllers/patient.controller")
 
 const router = require("express").Router()
 
@@ -9,6 +9,7 @@ router
 .post("/book",bookAppointment)
 .get("/fetch-appointments", getMyAppointments)
 .get("/fetch-appointments-history", getAppointmentHistory)
+.get("/fetch-search", getSearchedDoctors)
 
 
 
