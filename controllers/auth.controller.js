@@ -124,6 +124,9 @@ exports.loginDoctor = asyncHandler(async (req, res) => {
         return res.status(401).json({ message: "invalid credentials pwd" })
 
     }
+    if (!result.isActive) {
+        return res.status(401).json({ message: "Account is Blocked " })
+    }
 
     const token = jwt.sign({ _id: result._id }, process.env.JWT_KEY, { expiresIn: "1d" })
 
@@ -180,6 +183,9 @@ exports.loginPatient = asyncHandler(async (req, res) => {
     if (!isVerify) {
         return res.status(401).json({ message: "invalid credentials pwd" })
 
+    }
+    if (!result.isActive) {
+        return res.status(401).json({ message: "Account is Blocked " })
     }
 
     const token = jwt.sign({ _id: result._id }, process.env.JWT_KEY, { expiresIn: "1d" })

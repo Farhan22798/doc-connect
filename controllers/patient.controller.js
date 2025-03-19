@@ -44,4 +44,14 @@ exports.getMyAppointments = asyncHandler(async (req, res) => {
         .sort({ createdAt: -1 })
     res.json({ message: "appointment history fetch success", result })
 })
+
+// exports.getSearchedDoctors = asyncHandler(async (req, res) => {
+
+//     const result = await Doctor
+//         .find({ isActive: true,  $or: [{ email: username }, { mobile: username }] }).select("-patient -createdAt -updatedAt -__v")
+//         .populate("doctor", "doctorName hero")
+//         .sort({ createdAt: -1 })
+//         res.json({ message: "appointment fetch success", result })
+//     })
   
+

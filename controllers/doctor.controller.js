@@ -19,9 +19,9 @@ exports.updateDoctorInfo = asyncHandler(async (req, res) => {
             return res.status(400).json({ message: "hero image is required" })
         }
 
-        const { address, city, startTime, endTime } = req.body
+        const { address, city} = req.body
 
-        const { isError, error } = checkEmpty({ address, city,   startTime, endTime })
+        const { isError, error } = checkEmpty({ address, city })
         if (isError) {
             return res.status(400).json({ message: "all fileds required", error })
         }
@@ -48,11 +48,26 @@ exports.getDoctorShcedule = asyncHandler(async (req, res) => {
     res.json({ message: "shcedule fetch success", result })
 })
 
-exports.updateDoctorShcedule = asyncHandler(async (req, res) => {
-    const { did } = req.params
-    await Doctor.findByIdAndUpdate(did, { startTime: req.body.startTime, endTime:req.body.endTime })
-    res.json({ message: "doctor shcedule update" })
-})
+exports.updateDoctorSchedule = asyncHandler(async (req, res) => {
+    const { did } = req.params;
+    const { day, startTime, endTime } = req.body;
+
+
+    const { isError, error } = checkEmpty({ day, startTime, endTime})
+    if (isError) {
+        return res.status(400).json({ message: "all fileds required", error })
+    }
+
+    const doctor = await Doctor.findById(did);
+    if (!doctor) {
+        return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    doctor.schedule[day] = { startTime, endTime };
+
+    await doctor.save();
+    res.json({ message: "Doctor schedule updated", schedule: doctor.schedule });
+});
 
 
 

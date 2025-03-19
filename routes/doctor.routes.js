@@ -1,4 +1,4 @@
-const { updateDoctorInfo, getDoctorShcedule, updateDoctorShcedule, getDoctorAppointments, updateDoctorAppointmentStatus, getDoctorAppointmentsHistory } = require("../controllers/doctor.controller")
+const { updateDoctorInfo, getDoctorShcedule,  getDoctorAppointments, updateDoctorAppointmentStatus, getDoctorAppointmentsHistory, updateDoctorSchedule } = require("../controllers/doctor.controller")
 
 const router=require("express").Router()
 
@@ -8,7 +8,7 @@ router
 .get("/get-shcedule",getDoctorShcedule)
 .get("/get-appointments",getDoctorAppointments)
 .get("/get-appointments-history",getDoctorAppointmentsHistory)
-.put("/update-time/:did",updateDoctorShcedule)
+.put("/update-time/:did",updateDoctorSchedule)
 .put("/updateAppStatus/:aid",updateDoctorAppointmentStatus)
 
 
