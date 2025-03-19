@@ -50,7 +50,7 @@ exports.getSearchedDoctors = asyncHandler(async (req, res) => {
 
     const result = await Doctor
         .find({ isActive: true, $or: [{ doctorName: searched }, { address: searched },{ spec: searched },{ city: searched }] }).select(" -createdAt -updatedAt -__v")
-        .populate("doctor", "doctorName hero")
+       
         .sort({ createdAt: -1 })
     res.json({ message: "search results fetch success", result })
 })
