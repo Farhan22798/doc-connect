@@ -46,13 +46,25 @@ exports.getAppointmentHistory = asyncHandler(async (req, res) => {
 })
 
 exports.getSearchedDoctors = asyncHandler(async (req, res) => {
-    const { searched } = req.body
+    const { searched } = req.query;  // 🔥 Use `req.query` for GET requests
 
-    const result = await Doctor
-        .find({ isActive: true, $or: [{ doctorName: searched }, { address: searched },{ spec: searched },{ city: searched }] }).select(" -createdAt -updatedAt -__v")
-       
-        .sort({ createdAt: -1 })
-    res.json({ message: "search results fetch success", result })
-})
+    if (!searched) {
+        return res.status(400).json({ message: "Search term is required" });
+    }
+
+    const result = await Doctor.find({
+        isActive: true,
+        $or: [
+            { doctorName: { $regex: searched, $options: "i" } },
+            { address: { $regex: searched, $options: "i" } },
+            { spec: { $regex: searched, $options: "i" } },
+            { city: { $regex: searched, $options: "i" } }
+        ]
+    }).select("-createdAt -updatedAt -__v")
+    .sort({ createdAt: -1 });
+
+    res.json({ message: "Search results fetched successfully", result });
+});
+
 
 
