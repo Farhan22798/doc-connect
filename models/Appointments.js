@@ -1,18 +1,31 @@
-const mongoose = require("mongoose")
+// const mongoose = require("mongoose")
+
+// const appointmentSchema = new mongoose.Schema({
+//     patient: { type: mongoose.Types.ObjectId, ref: "patient", required: true },
+//     doctor: { type: mongoose.Types.ObjectId, ref: "doctor", required: true },
+//     customerdetsreseaons: [
+//         {
+//             date: { type: String, required: true },
+//             time: { type: String, required: true },
+//             reason: { type: String, required: true },
+//         }
+//     ],
+//     status: { type: String, default: "Pending", enum: ["Pending","Cancelled", "Confirmed", "Old"] },
+
+
+// }, { timestamps: true })
+
+// module.exports = mongoose.model("appointment", appointmentSchema)
+
+const mongoose = require("mongoose");
 
 const appointmentSchema = new mongoose.Schema({
-    patient: { type: mongoose.Types.ObjectId, ref: "patient", required: true },
-    doctor: { type: mongoose.Types.ObjectId, ref: "doctor", required: true },
-    customerdetsreseaons: [
-        {
-            date: { type: String, required: true },
-            time: { type: String, required: true },
-            reason: { type: String, required: true },
-        }
-    ],
-    status: { type: String, default: "Pending", enum: ["Pending","Cancelled", "Confirmed", "Old"] },
+  patient: { type: mongoose.Schema.Types.ObjectId, ref: "patient", required: true },
+  doctor: { type: mongoose.Schema.Types.ObjectId, ref: "doctor", required: true },
+  date: { type: String, required: true },
+  time: { type: String, required: true },
+  reason: { type: String, required: true },
+  status: { type: String, default: "Pending", enum: ["Pending", "Cancelled", "Confirmed"] }
+}, { timestamps: true });
 
-
-}, { timestamps: true })
-
-module.exports = mongoose.model("appointment", appointmentSchema)
+module.exports = mongoose.model("appointment", appointmentSchema);
