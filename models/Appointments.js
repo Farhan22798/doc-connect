@@ -6,7 +6,7 @@ const appointmentSchema = new mongoose.Schema({
     customerdetsreseaons: [
         {
             date: { type: String, required: true },
-            time: { type: String, required: true },
+            slot: { type: String, required: true },
             reason: { type: String, required: true },
         }
     ],
