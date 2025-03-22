@@ -30,7 +30,7 @@ exports.bookAppointment = asyncHandler(async (req, res) => {
 exports.getMyAppointments = asyncHandler(async (req, res) => {
 
     const result = await Appointments
-        .find({ patient: req.user, status: { $ne: "Old" } }).select("-patient -createdAt -updatedAt -__v")
+        .find({ patient: req.user, status:{ $nin: ["Old", "Cancelled"] } }).select("-patient -createdAt -updatedAt -__v")
         .populate("doctor", "doctorName hero")
         .sort({ createdAt: -1 })
     res.json({ message: "appointment fetch success", result })
@@ -46,7 +46,7 @@ exports.getAppointmentHistory = asyncHandler(async (req, res) => {
 })
 
 exports.getSearchedDoctors = asyncHandler(async (req, res) => {
-    const { searched } = req.query;  // 🔥 Use `req.query` for GET requests
+    const { searched } = req.query;  
 
     if (!searched) {
         return res.status(400).json({ message: "Search term is required" });
